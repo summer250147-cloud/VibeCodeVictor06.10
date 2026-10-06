@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Segoe UI, Arial, sans-serif;
+      background: #f3f5f8;
+      color: #1f2933;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 360px;
+      padding: 24px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(31, 41, 51, 0.08);
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      border: 1px solid #cfd6de;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    button {
+      flex: 1;
+      padding: 10px 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    #add {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    #clear {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    #result {
+      min-height: 44px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #f8fafc;
+      font-size: 16px;
+    }
+
+    #result.error {
+      color: #b91c1c;
+      background: #fef2f2;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Калькулятор</h1>
+    <label for="num1">Число 1</label>
+    <input id="num1" type="text" inputmode="decimal" autocomplete="off">
+    <label for="num2">Число 2</label>
+    <input id="num2" type="text" inputmode="decimal" autocomplete="off">
+    <div class="buttons">
+      <button id="add" type="button">Сложить</button>
+      <button id="clear" type="button">Очистить</button>
+    </div>
+    <div id="result"></div>
+  </div>
+  <script>
+    var num1 = document.getElementById("num1");
+    var num2 = document.getElementById("num2");
+    var result = document.getElementById("result");
+
+    function parseNumber(value) {
+      var trimmed = value.trim().replace(",", ".");
+      if (trimmed === "") {
+        return NaN;
+      }
+      return Number(trimmed);
+    }
+
+    document.getElementById("add").addEventListener("click", function () {
+      var a = parseNumber(num1.value);
+      var b = parseNumber(num2.value);
+
+      if (!Number.isFinite(a) || !Number.isFinite(b)) {
+        result.className = "error";
+        result.textContent = "Введите два числа";
+        return;
+      }
+
+      result.className = "";
+      result.textContent = a + b;
+    });
+
+    document.getElementById("clear").addEventListener("click", function () {
+      num1.value = "";
+      num2.value = "";
+      result.className = "";
+      result.textContent = "";
+    });
+  </script>
+</body>
+</html>
